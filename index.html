@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <!-- Bootstrap CSS -->
+        <!-- https://cdnjs.com/libraries/twitter-bootstrap/5.0.0-beta1 -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css"/>
+
+        <!-- Icons: https://getbootstrap.com/docs/5.0/extend/icons/ -->
+        <!-- https://cdnjs.com/libraries/font-awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+            primary="primary"/>
+        <title>Hello, world!</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body >
+        <div id="login-area">
+            <h1 class="text-center">Welcome To Sujon Bank</h1>
+            <div class="submit-area">
+                <h4>Login</h4>
+                <input type="text" class="form-control" placeholder="E-mail"><br>
+                <input
+                    type="password"
+                    name=""
+                    id=""
+                    class="form-control"
+                    placeholder="password"><br>
+                <button class="btn btn-success" id="login">Enter</button>
+            </div>
+        </div>
+        <div id="transaction-area">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="deposit status">
+                        <h5>Deposit</h5>
+                        <h2>$ <span id="currentDeposit">00</span></h2>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="withdraw status">
+                        <h5>Withdraw</h5>
+                        <h2>$ <span id="currentWithdraw">00</span></h2>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="balance status">
+                        <h5>Balance</h5>
+                        <h2>$ <span id="currentBalance">1240</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input id="depositAmount" type="text" class="form-control" placeholder="$ amount you want to deposit">
+                    <button class="btn btn-success" id="depositBtn">Deposit</button>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input id="withdrawAmount" type="text" class="form-control" placeholder="$ amount you want to withdraw">
+                    <button id="withdrawBtn" class="btn btn-success">Withdraw</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Bundle with Popper -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // login button click handler
+            document
+                .getElementById('login')
+                .addEventListener('click', function () {
+                    const hideLoginArea = document.getElementById('login-area');
+                    hideLoginArea.style.display = 'none';
+                    const showtransactionArea = document.getElementById('transaction-area');
+                    showtransactionArea.style.display = 'block';
+                })
+
+                // deposit button event handler
+                const depositBtn = document.getElementById("depositBtn");
+                depositBtn.addEventListener("click", function(){
+                    const depositNumber = getInputNumber("depositAmount");
+
+                    updateSpanText("currentDeposit", depositNumber);
+                    updateSpanText("currentBalance", depositNumber);
+
+                    document.getElementById("depositAmount").value = '';
+                })
+                const withdrawBtn = document.getElementById("withdrawBtn");
+                withdrawBtn.addEventListener("click", function() {
+                    const withdrawNumber = getInputNumber("withdrawAmount");
+
+                    updateSpanText("currentWithdraw", withdrawNumber);
+                    updateSpanText("currentBalance", withdrawNumber * -1);
+
+                    document.getElementById("withdrawAmount").value = '';
+                })
+
+
+                function getInputNumber(id) {
+                    const amount = document.getElementById(id).value;
+                    const amountNumber = parseFloat(amount);
+                    return amountNumber;
+                }
+                function updateSpanText(id, depositNumber) {
+                    const current = document.getElementById(id).innerText;
+                    const currentNumber = parseFloat(current);
+                    const totalAmount = currentNumber + depositNumber;
+                    document.getElementById(id).innerText = totalAmount;
+                }
+
+        </script>
+    </body>
+</html>
